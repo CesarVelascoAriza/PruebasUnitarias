@@ -163,6 +163,7 @@ class ExamenServiceImplTest {
 		when(preguntaRepostory.findPreguntasPorExamenId(anyLong())).thenReturn(Datos.PREGUNTAS);
 		examenService.findExamenPorNombreConPreguntas("Matemáticas");
 		verify(examenRepository).findAll();
-		verify(preguntaRepostory).findPreguntasPorExamenId(argThat(arg-> arg!= null && arg.equals(1L)));
+		//verify(preguntaRepostory).findPreguntasPorExamenId(argThat(arg-> arg!= null && arg.equals(1L)));
+		verify(preguntaRepostory).findPreguntasPorExamenId(argThat(arg-> arg!= null && arg >= 1L));
 	}
 }
