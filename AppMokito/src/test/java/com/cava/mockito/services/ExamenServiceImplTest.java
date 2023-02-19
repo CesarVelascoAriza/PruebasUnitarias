@@ -166,4 +166,28 @@ class ExamenServiceImplTest {
 		//verify(preguntaRepostory).findPreguntasPorExamenId(argThat(arg-> arg!= null && arg.equals(1L)));
 		verify(preguntaRepostory).findPreguntasPorExamenId(argThat(arg-> arg!= null && arg >= 1L));
 	}
+
+	@Test
+	void testArgumentoMatcher2() {
+		when(examenRepository.findAll()).thenReturn(Datos.EXAMENES);
+		when(preguntaRepostory.findPreguntasPorExamenId(anyLong())).thenReturn(Datos.PREGUNTAS);
+		examenService.findExamenPorNombreConPreguntas("Matemáticas");
+		verify(examenRepository).findAll();
+		verify(preguntaRepostory).findPreguntasPorExamenId(argThat(new MiArgsMatchers()));
+	}
+
+	public static class MiArgsMatchers implements ArgumentMatcher<Long>{
+
+		private Long argument;
+
+		@Override
+		public boolean matches(Long argument){
+			return argument != null  && argument > 0;
+		}
+		@Override
+		public String toString() {
+			return "es para un mensaje  perzonalizado de error"+
+			"que imprime mockito en caso de que falle el test";
+		}
+	}
 }
