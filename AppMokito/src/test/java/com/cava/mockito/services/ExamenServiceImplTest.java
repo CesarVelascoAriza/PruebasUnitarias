@@ -15,6 +15,8 @@ import static org.mockito.ArgumentMatchers.matches;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.beans.Transient;
+import java.time.DayOfWeek;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -40,6 +42,9 @@ class ExamenServiceImplTest {
 	PreguntaRepostory preguntaRepostory;
 	@InjectMocks
 	ExamenServiceImpl examenService;
+
+	@Captor 
+	ArgumentCaptor<Long> captor;
 
 	@BeforeEach
 	void initMethodTest() {
@@ -176,18 +181,57 @@ class ExamenServiceImplTest {
 		verify(preguntaRepostory).findPreguntasPorExamenId(argThat(new MiArgsMatchers()));
 	}
 
+	@Test
+	void testArgumentoMatcher3() {
+		when(examenRepository.findAll()).thenReturn(Datos.EXAMENES);
+		when(preguntaRepostory.findPreguntasPorExamenId(anyLong())).thenReturn(Datos.PREGUNTAS);
+		examenService.findExamenPorNombreConPreguntas("Matemáticas");
+		verify(examenRepository).findAll();
+		verify(preguntaRepostory).findPreguntasPorExamenId(argThat((argument)-> argument != null  && argument > 0));
+	}
+
 	public static class MiArgsMatchers implements ArgumentMatcher<Long>{
 
 		private Long argument;
 
 		@Override
 		public boolean matches(Long argument){
+			this.argument =argument;
 			return argument != null  && argument > 0;
 		}
 		@Override
 		public String toString() {
 			return "es para un mensaje  perzonalizado de error"+
-			"que imprime mockito en caso de que falle el test";
+			"que imprime mockito en caso de que falle el test" + argument + "debe ser un etero positivo";
 		}
 	}
+
+	@Test
+	void testArgumentCaptor(){
+		when(examenRepository.findAll()).thenReturn(Datos.EXAMEN);
+		when(preguntaRepostory.findPreguntasPorExamenId(anyLong())).thenReturn(Datos.PREGUNTAS);
+		examenService.findExamenPorNombreConPreguntas("Historia");
+
+		//capturar los argumentos con la instanciacion del metodo propio de mockito de forma explicita (manual)
+
+		//ArgumentCaptor<Long> captor = ArgumentCaptor.forClass(Long.class);
+		Verify(preguntaRepostory).findPreguntasPorExamenId(captor.capture());
+		
+		assertEquals(5L,captor.getValue());
+
+	}
+
+	@Test
+	void testDoThrow(){
+		Examen examen = Datos.EXAMEN;
+		examen.setPreguntas(Datos.PREGUNTAS);
+		//se realiza el cambio de la implementacion dado que se tiene que realizar la llamada primero de el do para el metodo void 
+		doThrow(IllegalArgumentException.class).when(preguntaRepostory).guardarVariasPreguntas(anyList());
+		//when(preguntaRepostory.guardarVariasPreguntas(anyList())).thenThrow(IllegalArgumentException.class);
+
+		assertThrows(IllegalArgumentException.class, ()->{
+			examenService.guardarExamen(examen);
+		});
+	}
+
 }
