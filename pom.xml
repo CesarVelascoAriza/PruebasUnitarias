@@ -7,5 +7,6 @@
   <modules>
   	<module>junit5App</module>
   	<module>AppMokito</module>
+  	<module>springBootTest</module>
   </modules>
 </project>

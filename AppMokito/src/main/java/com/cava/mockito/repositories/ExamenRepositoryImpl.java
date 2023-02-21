@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.cava.mockito.models.Examen;
+import com.cava.mockito.services.Datos;
 
 public class ExamenRepositoryImpl implements ExamenRepository {
 
@@ -21,7 +22,7 @@ public class ExamenRepositoryImpl implements ExamenRepository {
 	@Override
 	public Examen guardar(Examen examen) {
 		// TODO Auto-generated method stub
-		return null;
+		return (Examen) Datos.EXAMENES;
 	}
 
 }
