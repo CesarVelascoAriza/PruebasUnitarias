@@ -2,6 +2,7 @@ package com.cava.test.springBoot.app.controller;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,19 @@ public class CuentaController {
 	@Autowired
 	private CuentaService cuentaService;
 	
+	
+	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
+	public List<Cuenta> listar(){
+		return cuentaService.findAll();
+	}
+	
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Cuenta guardar(@RequestBody Cuenta cuenta) {
+		return cuentaService.save(cuenta);
+	}
+	
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Cuenta detalle(@PathVariable(name = "id") Long id) {
@@ -41,8 +55,6 @@ public class CuentaController {
 		response.put("mensaje", "Transferencia realizada con exito");
 		response.put("transaccion", dto);
 		return ResponseEntity.ok(response);
-		
-		
-		
+			
 	}
 }
