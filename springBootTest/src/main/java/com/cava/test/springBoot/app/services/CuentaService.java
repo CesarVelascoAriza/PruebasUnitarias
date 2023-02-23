@@ -9,6 +9,7 @@ public interface CuentaService {
 
 	List<Cuenta> findAll();
 	Cuenta findById(Long id);
+	void deleteById(Long id);
 	int revisarTotalTransFerenias(Long bancoId);
 	BigDecimal revisarSaldo(Long cuentaId);
 	Cuenta save(Cuenta cuenta);

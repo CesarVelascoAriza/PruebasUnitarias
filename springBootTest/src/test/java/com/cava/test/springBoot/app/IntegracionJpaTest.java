@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.cava.test.springBoot.app.models.Cuenta;
 import com.cava.test.springBoot.app.repositorys.CuentaRepository;
 
+@Tag("Data_jp")
 @DataJpaTest
 public class IntegracionJpaTest {
 

@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,6 +34,7 @@ import com.cava.test.springBoot.app.repositorys.CuentaRepository;
 import com.cava.test.springBoot.app.services.CuentaService;
 import com.cava.test.springBoot.app.services.Datos;
 
+@Tag("test")
 @SpringBootTest
 class SpringBootTestApplicationTests {
 

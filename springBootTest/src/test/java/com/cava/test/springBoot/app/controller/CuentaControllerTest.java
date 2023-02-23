@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,6 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
+@Tag("testController")
 @WebMvcTest(controllers = CuentaController.class)
 class CuentaControllerTest {
 
